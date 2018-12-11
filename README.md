@@ -3,7 +3,7 @@ collect youtube data to mysql for trending analysis
 
 ## youtubeCategory Table
 - 유튜브 카테고리를 담아두는 테이블
-### SQL
+#### SQL
 ```
 CREATE TABLE `youtubeCategory` (
   `categoryId` int(3) DEFAULT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `youtubeCategory` (
 
 ## youtubeMostPopular Table
 - 유튜브 시간 별 랭킹 및 기타 정보를 담아두는 테이블
-### SQL
+#### SQL
 ```
 CREATE TABLE `youtubeMostPopular` (
   `timeId` int(11) DEFAULT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `youtubeMostPopular` (
 
 ## youtubeTimeline Table
 - Update 시간을 저장할 테이블 - youtubeMostPopular 테이블의 timeId와 매치
-### SQL
+#### SQL
 ```
 CREATE TABLE `youtubeTimeline` (
   `timeId` int(11) DEFAULT NULL,
