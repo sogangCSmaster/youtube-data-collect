@@ -35,7 +35,7 @@ CREATE TABLE `youtubeMostPopular` (
   `commentCount` int(11) DEFAULT NULL,
   `tags` text DEFAULT NULL,
   `topicCategories` text DEFAULT NULL,
-  KEY `timeId` (`timeId`),
+  FOREIGN KEY `timeId` (`timeId`) REFERENCES `youtubeTimeline` (`timeId`),
   KEY `reversedtimeId` (`reversedTimeId`),
   KEY `videoId` (`videoId`),
   KEY `channelID` (`channelId`)
@@ -47,9 +47,9 @@ CREATE TABLE `youtubeMostPopular` (
 #### SQL
 ```
 CREATE TABLE `youtubeTimeline` (
-  `timeId` int(11) DEFAULT NULL,
+  `timeId` int(11) NOT NULL,
   `updateTime` datetime DEFAULT NULL,
-  KEY `timeId` (`timeId`),
+  PRIMARY KEY (`timeId`),
   KEY `updateTime` (`updateTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
