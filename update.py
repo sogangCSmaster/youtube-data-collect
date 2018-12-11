@@ -62,11 +62,21 @@ def main():
         channelId = snippet['channelId']
         title = snippet['title']
         description = snippet['description']
-        try:
+
+    
+        if 'maxres' in snippet['thumbnails']:
             thumbnails = snippet['thumbnails']['maxres']['url']
-        except:
+        elif 'standard' in snippet['thumbnails']:
             thumbnails = snippet['thumbnails']['standard']['url']
+        elif 'high' in snippet['thumbnails']:
+            thumbnails = snippet['thumbnails']['high']['url']
+        elif 'medium' in snippet['thumbnails']:
+            thumbnails = snippet['thumbnails']['medium']['url']
+        else:
+            thumbnails = snippet['thumbnails']['default']['url']
         
+
+
         channelTitle = snippet['channelTitle']
         try:
             tags = snippet['tags']
@@ -74,14 +84,29 @@ def main():
             tags = []
         tags = json.dumps(tags, ensure_ascii=False)
         
+
         categoryId = snippet['categoryId']
         statistics = item['statistics']
-        viewCount = statistics['viewCount']
-        likeCount = statistics['likeCount']
-        dislikeCount = statistics['dislikeCount']
-        favoriteCount = statistics['favoriteCount']
-        commentCount = statistics['commentCount']
-        if item['topicDetails']:
+
+        viewCount = None
+        likeCount = None
+        dislikeCount = None
+        favoriteCount = None
+        commentCount = None
+
+        if 'viewCount' in statistics:
+            viewCount = statistics['viewCount']
+        if 'likeCount' in statistics:
+            likeCount = statistics['likeCount']
+        if 'dislikeCount' in statistics:
+            dislikeCount = statistics['dislikeCount']
+        if 'favoriteCount' in statistics:
+            favoriteCount = statistics['favoriteCount']
+        if 'commentCount' in statistics:
+            commentCount = statistics['commentCount']
+
+
+        if 'topicDetails' in item:
             topicDetails = item['topicDetails']
             try:
                 topicCategories = topicDetails['topicCategories']
