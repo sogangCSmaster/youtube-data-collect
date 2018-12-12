@@ -54,8 +54,7 @@ def main():
         try:
             curs.execute(sql, (channelId, title, description, thumbnails, publishedAt))
         except Exception as e:
-            sql2 = "UPDATE youtubeChannelList SET title=%s, description=%s, thumbnails=%s"
-            curs.execute(sql2, (title, description, thumbnails))
+            print(e)
 
     con.close()
 
