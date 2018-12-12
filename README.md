@@ -53,3 +53,6 @@ CREATE TABLE `youtubeTimeline` (
   KEY `updateTime` (`updateTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
+
+## 유튜브 채널 정보 가져오는 API
+- GET https://www.googleapis.com/youtube/v3/channels?part=id%2Csnippet%2Cstatistics%2CtopicDetails&id={channel_ID}&key={YOUR_API_KEY}
