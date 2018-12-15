@@ -12,6 +12,13 @@ def mostPopular(maxResults):
     result = requests.get(url=url, params=params)
     return result
 
+def mostPopular_next(maxResults, nextPageToken):
+    #GET https://www.googleapis.com/youtube/v3/videos
+    url = "https://www.googleapis.com/youtube/v3/videos"
+    params = {'part': 'id,snippet,contentDetails,statistics,status,topicDetails', 'chart': 'mostPopular', 'maxResults': maxResults, 'regionCode': 'KR', 'key': apikey, "pageToken": nextPageToken}
+    result = requests.get(url=url, params=params)
+    return result
+
 def update_channel(channelId):
     #GET https://www.googleapis.com/youtube/v3/channels
     url = "https://www.googleapis.com/youtube/v3/channels"
@@ -26,8 +33,11 @@ def main():
     
     channelIds = []
     
-    datas = mostPopular(50)
+    #datas = mostPopular(50)
+    datas = mostPopular_next(50, 'CDIQAA')
     datas = json.loads(datas.text) #result to json
+    nextPageToken = datas['nextPageToken']
+    print(nextPageToken)
     items2 = datas['items']
 
     for item in items2:
@@ -48,7 +58,7 @@ def main():
         description = snippet['description']
         publishedAt = snippet['publishedAt']
         publishedAt = datetime.datetime.strptime(publishedAt, f)
-        thumbnails = ""
+        thumbnails = snippet['thumbnails']['default']['url']
         sql = "INSERT INTO youtubeChannelList (channelId, title, description, thumbnails, publishedAt) VALUES (%s, %s, %s, %s, %s)"
 
         try:
