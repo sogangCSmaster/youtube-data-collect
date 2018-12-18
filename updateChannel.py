@@ -3,6 +3,7 @@ import requests
 import json
 import pymysql
 import datetime
+from pprint import pprint
 
 
 def mostPopular(maxResults):
@@ -22,7 +23,7 @@ def mostPopular_next(maxResults, nextPageToken):
 def update_channel(channelId):
     #GET https://www.googleapis.com/youtube/v3/channels
     url = "https://www.googleapis.com/youtube/v3/channels"
-    params = {'part': 'statistics,snippet', 'id': channelId, 'key': apikey}
+    params = {'part': 'statistics,snippet,id,brandingSettings,topicDetails', 'id': channelId, 'key': apikey}
     result = requests.get(url=url, params=params)
     return result
 
@@ -33,11 +34,9 @@ def main():
     
     channelIds = []
     
-    #datas = mostPopular(50)
-    datas = mostPopular_next(50, 'CDIQAA')
+    datas = mostPopular(50)
     datas = json.loads(datas.text) #result to json
     nextPageToken = datas['nextPageToken']
-    print(nextPageToken)
     items2 = datas['items']
 
     for item in items2:
@@ -50,6 +49,7 @@ def main():
     for channelId in channelIds:
         result = update_channel(channelId)
         result = json.loads(result.text)
+        pprint(result)
 
         items = result['items'][0]
         snippet = items['snippet']
