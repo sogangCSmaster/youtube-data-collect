@@ -4,8 +4,6 @@ import json
 import pymysql
 import datetime
 from categoryList import categoryList
-from pprint import pprint
-
 
 def mostPopular(maxResults):
     #GET https://www.googleapis.com/youtube/v3/videos
