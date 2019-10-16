@@ -24,23 +24,27 @@ def main():
     channelIds = curs.fetchall()
 
     for channelId in channelIds:
-        channelId = channelId[0]
+        try:
+            channelId = channelId[0]
 
-        result = getStatistics(channelId)
-        result = json.loads(result.text)
-        
-        items = result['items'][0]
-        statistics = items['statistics']
-        viewCount = statistics['viewCount']
-        commentCount = statistics['commentCount']
-        subscriberCount = statistics['subscriberCount']
-        videoCount = statistics['videoCount']
+            result = getStatistics(channelId)
+            result = json.loads(result.text)
+            print(result)
+            
+            items = result['items'][0]
+            statistics = items['statistics']
+            viewCount = statistics['viewCount']
+            commentCount = statistics['commentCount']
+            subscriberCount = statistics['subscriberCount']
+            videoCount = statistics['videoCount']
 
-        now = datetime.datetime.now()
-        updateTime = now.strftime('%Y-%m-%d %H:%M:%S')
-        
-        sql = "INSERT INTO youtubeChannelStatistics (channelId, updateTime, viewCount, commentCount, subscriberCount, videoCount) VALUES (%s, %s, %s, %s, %s, %s)"
-        curs.execute(sql, (channelId, updateTime, viewCount, commentCount, subscriberCount, videoCount))
+            now = datetime.datetime.now()
+            updateTime = now.strftime('%Y-%m-%d %H:%M:%S')
+            
+            sql = "INSERT INTO youtubeChannelStatistics (channelId, updateTime, viewCount, commentCount, subscriberCount, videoCount) VALUES (%s, %s, %s, %s, %s, %s)"
+            curs.execute(sql, (channelId, updateTime, viewCount, commentCount, subscriberCount, videoCount))
+        except Exception as e:
+            print(e)
     
     
 
